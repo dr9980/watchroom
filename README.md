@@ -13,7 +13,22 @@
 
 对应产品需求文档里的 MVP，房主端从安卓原生 App 换成了浏览器。
 
-## 1. 能做什么
+![演示](docs/demo.gif)
+
+*手机观众视角：打开链接 → 填昵称 → 看画面 → 发聊天/弹幕 → 开麦。画面来自虚拟摄像头（演示用）。*
+
+
+## 2. 界面
+
+| 电脑当房主（共享屏幕/摄像头） | 手机当房主（共享摄像头） |
+| --- | --- |
+| ![电脑房主](docs/screenshots/02-host-desktop.png) | ![手机房主](docs/screenshots/06-phone-host.png) |
+
+| 手机观众观看 + 弹幕 | 用链接加入 |
+| --- | --- |
+| ![手机观众](docs/screenshots/04-viewer-mobile.png) | ![加入](docs/screenshots/03-join-mobile.png) |
+
+## 3. 能做什么
 
 | 需求 | 实现 |
 | --- | --- |
@@ -31,7 +46,7 @@
 
 非目标（和需求文档一致）：iOS 原生、公开房间、录制回放、绕过 DRM、多人同时共享。
 
-## 2. 快速开始
+## 4. 快速开始
 
 ```bash
 cd watchroom
@@ -41,16 +56,16 @@ npm install
 
 浏览器打开 `http://localhost:8080` → 「我要开房」→ 进房后点 **共享屏幕** 或 **共享摄像头**。
 
-## 3. 手机当房主（共享摄像头）
+## 5. 手机当房主（共享摄像头）
 
-1. 手机和电脑连同一个 Wi-Fi（或服务部署在公网，见第 6 节）
+1. 手机和电脑连同一个 Wi-Fi（或服务部署在公网，见第 8 节）
 2. 手机浏览器打开 `https://<电脑IP>:8443`，证书警告点「高级 → 继续前往」
 3. 「我要开房」→ 填昵称 → 进房点 **共享摄像头**
 4. 点「复制邀请链接」发给朋友；朋友用手机/电脑打开链接即可观看、开麦、发弹幕
 
 **为什么手机不能共享屏幕**：Android/iOS 的 Chrome/Safari/微信浏览器都没实现 `getDisplayMedia`（这是浏览器安全限制，不是本项目的问题）。要在手机上共享真·屏幕，只能写安卓原生 App（`MediaProjection`），本项目不做。
 
-## 4. 局域网 HTTPS
+## 6. 局域网 HTTPS
 
 浏览器只在 **HTTPS 或 localhost** 下给屏幕/摄像头/麦克风权限，局域网必须自签证书：
 
@@ -61,7 +76,7 @@ npm start
 
 首次访问点 **高级 → 继续前往**（自签证书，别用于正式公网）。
 
-## 5. 观众加入
+## 7. 观众加入
 
 打开 `https://<房主地址>/r/CODE`，或用首页输入房间码：
 
@@ -71,7 +86,7 @@ npm start
 
 观众自己也用链接，最多 10 个。
 
-## 6. 让别人从外网打开链接
+## 8. 让别人从外网打开链接
 
 三选一：
 
@@ -92,7 +107,7 @@ TURN_URL=turn:<公网IP>:3478 TURN_USER=wr TURN_PASS=YOURPASS npm start
 # 不想用公开 TURN：NO_PUBLIC_TURN=1 npm start
 ```
 
-## 7. 目录结构
+## 9. 目录结构
 
 ```
 watchroom/
@@ -108,10 +123,11 @@ watchroom/
 ├── gen-cert.sh            # 自签证书
 ├── tunnel.sh              # Cloudflare 临时公网
 ├── Dockerfile / docker-compose.yml
+├── docs/                  # 演示 GIF 与截图（用 Playwright + 虚拟摄像头生成）
 └── .github/workflows/ci.yml
 ```
 
-## 8. 架构
+## 10. 架构
 
 ```
 浏览器房主 ──WebRTC(屏幕或摄像头+声音)──┐
@@ -124,7 +140,7 @@ watchroom/
 - `public/room.html|js|css`：房间页，WebRTC mesh、perfect negotiation、聊天、弹幕
 - 媒体是 **P2P mesh**：房主上行 = 观众数 × 码率。720p 约 1.5–3 Mbps/人，**手机 4G 当房主建议 3–5 人以内**；同 Wi-Fi 可到 10 人
 
-## 9. 测试
+## 11. 测试
 
 ```bash
 npm test
@@ -134,7 +150,7 @@ npm test
 
 jsdom 里 WebRTC/摄像头是假实现，真机浏览器仍要手动点一遍。
 
-## 10. 已知限制
+## 12. 已知限制
 
 1. 上行带宽是 mesh 的硬上限：手机 4G 当房主别超过 3–5 人
 2. 电脑共享「整个屏幕」会暴露通知、微信消息、验证码——所以才保留强提示和水印
