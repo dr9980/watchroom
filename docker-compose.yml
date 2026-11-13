@@ -1,0 +1,16 @@
+services:
+  watchroom:
+    build: .
+    container_name: watchroom
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+    volumes:
+      - ./certs:/app/certs:ro
+    environment:
+      # 可选：公网/跨网络必须配 TURN（见 README 第 5 节）
+      TURN_URL: "${TURN_URL:-}"
+      TURN_USER: "${TURN_USER:-}"
+      TURN_PASS: "${TURN_PASS:-}"
+      MAX_VIEWERS: "${MAX_VIEWERS:-10}"

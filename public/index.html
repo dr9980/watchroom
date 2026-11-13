@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>私人观影房</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="wrap">
+  <div class="brand"><span class="dot"></span>私人观影房</div>
+  <div class="sub">房主分享屏幕，朋友用链接在网页观看 · 最多 10 名观众</div>
+
+  <div id="join-panel">
+    <div class="card">
+      <h2>加入房间</h2>
+      <label class="field"><span>房间码 / 邀请链接</span>
+        <input type="text" id="join-code" placeholder="例如 K7M2QP4X" autocomplete="off" autocapitalize="characters">
+      </label>
+      <label class="field"><span>昵称</span>
+        <input type="text" id="join-name" maxlength="20" placeholder="朋友看到的名字" autocomplete="off">
+      </label>
+      <label class="field"><span>房间密码（没有就留空）</span>
+        <input type="password" id="join-pass" maxlength="40" autocomplete="off">
+      </label>
+      <button class="primary block" id="btn-join">加入</button>
+      <div class="err" id="join-err"></div>
+    </div>
+
+    <div class="tabs">
+      <button class="active" data-tab="join">我要看</button>
+      <button data-tab="create">我要开房</button>
+    </div>
+  </div>
+
+  <div id="create-panel" class="hidden">
+    <div class="card">
+      <h2>创建房间</h2>
+      <label class="field"><span>你的昵称</span>
+        <input type="text" id="create-name" maxlength="20" placeholder="房主昵称" autocomplete="off">
+      </label>
+      <label class="field"><span>房间密码（可选）</span>
+        <input type="password" id="create-pass" maxlength="40" placeholder="留空表示无密码" autocomplete="off">
+      </label>
+      <button class="primary block" id="btn-create">创建并进入</button>
+      <div class="err" id="create-err"></div>
+      <p class="hint" style="margin-top:14px">
+        电脑可以「共享屏幕」，手机用「共享摄像头」——进房后自己选。观众只要点链接，装不装 App 都行。
+      </p>
+    </div>
+
+    <div class="tabs">
+      <button data-tab="join">我要看</button>
+      <button class="active" data-tab="create">我要开房</button>
+    </div>
+  </div>
+
+  <p class="hint" id="secure-hint"></p>
+</div>
+
+<script src="/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "name": "watchroom",
+  "version": "0.1.0",
+  "private": true,
+  "description": "私人观影房（网页版）：房主分享屏幕，观众用链接在浏览器观看 + 语音 + 聊天 + 弹幕",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test/signaling.test.js && node test/client.test.js",
+    "cert": "./gen-cert.sh",
+    "test:client": "node test/client.test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "jsdom": "^31.0.0"
+  }
+}

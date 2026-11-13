@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>观影房</title>
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/room.css">
+</head>
+<body class="room-body">
+<div class="app">
+  <header class="topbar">
+    <div class="tb-left">
+      <span class="dot" id="conn-dot"></span>
+      <span class="code" id="room-code">------</span>
+      <span class="badge" id="state-badge">连接中</span>
+      <span class="badge" id="count-badge">0/10</span>
+    </div>
+    <div class="tb-right">
+      <button class="ghost small" id="btn-copy">复制邀请链接</button>
+      <button class="ghost small" id="btn-leave">退出</button>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="stage-col">
+      <div class="stage" id="stage">
+        <video id="screen" autoplay playsinline muted></video>
+        <div class="stage-empty" id="stage-empty">等待房主开始共享…</div>
+        <div class="danmaku-layer" id="danmaku-layer"></div>
+        <div class="watermark" id="watermark"></div>
+        <div class="stage-toast" id="stage-toast"></div>
+      </div>
+
+      <div class="controls">
+        <div id="host-controls" class="ctrl-group hidden">
+          <button class="primary" id="btn-share-screen">共享屏幕</button>
+          <button class="primary" id="btn-share-camera">共享摄像头</button>
+          <button id="btn-switch-cam" class="hidden">切换镜头</button>
+          <button id="btn-pause" class="hidden">暂停</button>
+          <button id="btn-resume" class="hidden">恢复</button>
+          <button class="danger hidden" id="btn-stop">停止共享</button>
+          <button class="danger ghost" id="btn-end">结束房间</button>
+        </div>
+        <div class="ctrl-group" id="common-controls">
+          <button id="btn-mic">开麦</button>
+          <button id="btn-danmaku" class="active">弹幕 开</button>
+        </div>
+      </div>
+      <p class="hint" id="role-hint"></p>
+    </section>
+
+    <aside class="side">
+      <div class="side-tabs">
+        <button class="active" data-pane="chat">聊天</button>
+        <button data-pane="members">成员 <span id="member-count">1</span></button>
+      </div>
+      <div class="pane" id="pane-chat">
+        <div class="chat-log" id="chat-log"></div>
+      </div>
+      <div class="pane hidden" id="pane-members">
+        <div class="member-list" id="member-list"></div>
+      </div>
+      <form class="chat-form" id="chat-form">
+        <input type="text" id="chat-text" maxlength="200" placeholder="说点什么…" autocomplete="off">
+        <button id="btn-dm-send" type="button" title="发一条弹幕">弹幕</button>
+        <button class="primary" id="btn-send" type="submit">发送</button>
+      </form>
+    </aside>
+  </main>
+</div>
+<script src="/room.js"></script>
+</body>
+</html>
