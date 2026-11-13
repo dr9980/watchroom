@@ -1,11 +1,10 @@
 'use strict';
 /* 浏览器端冒烟测试：用 jsdom 跑真实页面 + 真实 WebSocket，WebRTC/媒体接口用假实现 */
-const { spawn } = require('child_process');
-const path = require('path');
 const { JSDOM, VirtualConsole } = require('jsdom');
+const { startServer } = require('./_server');
 
-const PORT = 8099;
-const BASE = `http://127.0.0.1:${PORT}`;
+const PORT = Number(process.env.TEST_PORT || 8099);
+const BASE = process.env.BASE || `http://127.0.0.1:${PORT}`;
 
 let pass = 0, fail = 0;
 function ok(cond, name, extra) {
@@ -102,12 +101,7 @@ function makeWindow(html, url, session, opts = {}) {
 }
 
 (async () => {
-  const srv = spawn(process.execPath, ['server.js'], {
-    cwd: path.join(__dirname, '..'),
-    env: { ...process.env, PORT: String(PORT), TLS_PORT: String(PORT + 1), TLS_KEY: '/nonexistent', TLS_CERT: '/nonexistent' },
-    stdio: 'ignore',
-  });
-  await sleep(1200);
+  const { child: srv } = await startServer(PORT);
 
   try {
     console.log('\n[1] 房主页');

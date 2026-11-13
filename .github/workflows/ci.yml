@@ -19,7 +19,5 @@ jobs:
           node-version: ${{ matrix.node }}
           cache: npm
       - run: npm ci
-      - name: 信令与房间规则测试
-        run: node test/signaling.test.js
-      - name: 浏览器端冒烟测试（jsdom）
-        run: node test/client.test.js
+      - name: 测试（信令 36 项 + 浏览器端 31 项，各自自动起服务）
+        run: npm test

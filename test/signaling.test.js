@@ -1,9 +1,10 @@
 'use strict';
 /* 信令与房间规则测试：不需要浏览器，用 ws 客户端模拟房主和观众 */
 const { WebSocket } = require('ws');
+const { startServer } = require('./_server');
 
-const BASE = process.env.BASE || 'http://127.0.0.1:8080';
-const WS = BASE.replace(/^http/, 'ws') + '/ws';
+let BASE = process.env.BASE || '';
+let WS = BASE ? BASE.replace(/^http/, 'ws') + '/ws' : '';
 
 let pass = 0, fail = 0;
 function ok(cond, name, extra) {
@@ -38,7 +39,14 @@ function client() {
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 (async () => {
-  console.log('\n[1] 静态资源');
+  let child = null;
+  if (!BASE) {
+    const srv = await startServer(Number(process.env.TEST_PORT || 8096));
+    child = srv.child;
+    BASE = srv.base;
+    WS = BASE.replace(/^http/, 'ws') + '/ws';
+  }
+  console.log('\n[1] 静态资源 (BASE=' + BASE + ')');
   for (const [p, code] of [['/', 200], ['/style.css', 200], ['/room.css', 200], ['/index.js', 200], ['/room.js', 200], ['/r/TESTCODE', 200], ['/api/config', 200], ['/healthz', 200], ['/nope.js', 404]]) {
     const r = await fetch(BASE + p);
     ok(r.status === code, `GET ${p} -> ${r.status}`);
@@ -162,6 +170,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   gone.ws.close();
 
   await sleep(200);
+  if (child) child.kill('SIGKILL');
   console.log(`\n结果: ${pass} 通过, ${fail} 失败\n`);
   process.exit(fail ? 1 : 0);
 })().catch((e) => { console.error('测试崩溃:', e); process.exit(1); });
