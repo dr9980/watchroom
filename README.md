@@ -58,6 +58,8 @@ npm install
 
 ## 5. 手机当房主（共享摄像头）
 
+> 手机端完整步骤、常见问题：见 [docs/手机版使用.md](docs/手机版使用.md)
+
 1. 手机和电脑连同一个 Wi-Fi（或服务部署在公网，见第 8 节）
 2. 手机浏览器打开 `https://<电脑IP>:8443`，证书警告点「高级 → 继续前往」
 3. 「我要开房」→ 填昵称 → 进房点 **共享摄像头**
@@ -123,7 +125,7 @@ watchroom/
 ├── gen-cert.sh            # 自签证书
 ├── tunnel.sh              # Cloudflare 临时公网
 ├── Dockerfile / docker-compose.yml
-├── docs/                  # 演示 GIF 与截图（用 Playwright + 虚拟摄像头生成）
+├── docs/                  # 演示 GIF、截图、手机版使用说明
 └── .github/workflows/ci.yml
 ```
 
