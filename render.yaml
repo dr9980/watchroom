@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: watchroom
+    runtime: node
+    plan: free
+    buildCommand: npm ci --omit=dev
+    startCommand: node server.js
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NO_PUBLIC_TURN
+        value: "0"
