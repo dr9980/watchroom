@@ -1,5 +1,5 @@
 [![ci](https://github.com/dr9980/watchroom/actions/workflows/ci.yml/badge.svg)](https://github.com/dr9980/watchroom/actions/workflows/ci.yml)
-![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen)
+![Node](https://img.shields.io/badge/node-%3E%3D20-brightgreen)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 ![Tests](https://img.shields.io/badge/tests-67%20passing-brightgreen)
 
